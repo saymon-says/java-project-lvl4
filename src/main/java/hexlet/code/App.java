@@ -1,11 +1,12 @@
 package hexlet.code;
 
 public class App {
-    public String getGreeting() {
+    public static String getGreeting() {
         return "Hello World!";
     }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        new App();
+        System.out.println(getGreeting());
     }
 }
