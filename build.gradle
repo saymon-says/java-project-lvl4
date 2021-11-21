@@ -39,10 +39,15 @@ dependencies {
     testImplementation 'org.assertj:assertj-core:3.20.2'
     implementation 'io.javalin:javalin:4.1.1'
     implementation 'org.slf4j:slf4j-simple:1.7.32'
+
+    implementation 'org.thymeleaf:thymeleaf:3.0.12.RELEASE'
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.0.0'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-java8time:3.0.4.RELEASE'
 }
 
 task stage(dependsOn: ['clean', 'installDist'])
 installDist.mustRunAfter clean
 
-mainClassName = 'hexlet.code.App'
-
+application {
+    mainClass = 'hexlet.code.App'
+}
