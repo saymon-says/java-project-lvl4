@@ -13,30 +13,29 @@ import java.util.Date;
 public class Url extends Model {
 
     @Id
-    private long id;
+    private final long id;
 
-    private String name;
+    private final String name;
 
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
+    private final Date createdAt;
 
-    public Url(String dbName, long id, String name, Date createdAt) {
-        super(dbName);
-        this.id = id;
-        this.name = name;
-        this.createdAt = createdAt;
+    public Url(long pId, String pName, Date pCreatedAt) {
+        this.id = pId;
+        this.name = pName;
+        this.createdAt = pCreatedAt;
     }
 
-    public long getId() {
+    public final long getId() {
         return id;
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public Date getCreatedAt() {
+    public final Date getCreatedAt() {
         return createdAt;
     }
 }
