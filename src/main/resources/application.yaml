@@ -10,5 +10,3 @@ ebean:
   db:
     migration:
       run: true
-#        generate: true
-  #      seedSql: seed.sql

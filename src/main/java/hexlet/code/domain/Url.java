@@ -23,8 +23,8 @@ public class Url extends Model {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
-    public Url(String name) {
-        this.name = name;
+    public Url(String pName) {
+        this.name = pName;
     }
 
     public final long getId() {

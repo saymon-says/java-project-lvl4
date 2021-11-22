@@ -1,10 +1,16 @@
+<!DOCTYPE html>
+<!--<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">-->
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Анализатор страниц</title>
-    <link rel="stylesheet" href="/webjars/bootstrap/5.1.1/css/bootstrap.min.css">
+    <!--    <link rel="stylesheet" href="/webjars/bootstrap/5.1.1/css/bootstrap.min.css">-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+          crossorigin="anonymous">
     <script src="/webjars/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
 </head>
 
@@ -26,7 +32,6 @@
 </nav>
 
 <main class="flex-grow-1">
-
     <section>
         <div class="container-fluid bg-dark p-5">
             <div class="row">
@@ -51,6 +56,14 @@
                     <p class="mt-2 mb-0 text-muted">Пример: https://www.example.com</p>
                 </div>
             </div>
+        </div>
+        <div class="container mt-3">
+            <div th:if="${session.flash}" class="rounded-0 m-0 alert alert-dismissible fade show alert-info"
+                 role="alert" th:text="${session.flash}">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <div th:if="${session.flash}" th:text="${#session.removeAttribute('flash')}"></div>
+            </div>
+            <section layout:fragment="content"></section>
         </div>
     </section>
 </main>
