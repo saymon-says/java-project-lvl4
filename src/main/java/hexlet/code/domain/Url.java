@@ -2,6 +2,7 @@ package hexlet.code.domain;
 
 import io.ebean.Model;
 import io.ebean.annotation.NotNull;
+import io.ebean.annotation.WhenCreated;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -13,18 +14,17 @@ import java.util.Date;
 public class Url extends Model {
 
     @Id
-    private final long id;
+    private long id;
 
     private final String name;
 
     @NotNull
+    @WhenCreated
     @Temporal(TemporalType.TIMESTAMP)
-    private final Date createdAt;
+    private Date createdAt;
 
-    public Url(long pId, String pName, Date pCreatedAt) {
-        this.id = pId;
-        this.name = pName;
-        this.createdAt = pCreatedAt;
+    public Url(String name) {
+        this.name = name;
     }
 
     public final long getId() {

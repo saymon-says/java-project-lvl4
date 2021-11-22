@@ -1,5 +1,6 @@
 package hexlet.code;
 
+import hexlet.code.controllers.PageController;
 import hexlet.code.controllers.RootController;
 import io.javalin.Javalin;
 import io.javalin.plugin.rendering.template.JavalinThymeleaf;
@@ -27,6 +28,7 @@ public class App {
 
     private static void addRoutes(Javalin app) {
         app.get("/", RootController.getWelcome());
+        app.post("urls", PageController.getAddPage());
     }
 
     public static Javalin getApp() {
