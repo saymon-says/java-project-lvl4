@@ -13,3 +13,6 @@ lint:
 
 build:
 	gradlew clean build
+
+doMigration:
+	gradlew generateMigrations
