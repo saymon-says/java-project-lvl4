@@ -1,12 +1,15 @@
 # Настройки ORM
 datasource:
-  # Задаём базу данных, к которой будет происходить подключение
-  db:
+  default: ${APP_ENV}
+  development:
     username: "sa"
     password: "sa"
     url: "jdbc:h2:./sam_serdiukov"
+  production:
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+    url: jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}
 
 ebean:
-  db:
     migration:
       run: true
