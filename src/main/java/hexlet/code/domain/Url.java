@@ -4,13 +4,16 @@ import io.ebean.Model;
 import io.ebean.annotation.NotNull;
 import io.ebean.annotation.WhenCreated;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Url extends Model {
@@ -26,8 +29,16 @@ public class Url extends Model {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
-    public Url(String pName) {
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<UrlCheck> urlCheck;
+
+    public Url(String pName, List<UrlCheck> pUrlChecks) {
         this.name = pName;
+        this.urlCheck = pUrlChecks;
+    }
+
+    public Url(String pTransmittedUrl) {
+        this.name = pTransmittedUrl;
     }
 
     public final long getId() {
@@ -40,5 +51,9 @@ public class Url extends Model {
 
     public final Date getCreatedAt() {
         return createdAt;
+    }
+
+    public List<UrlCheck> getUrlCheck() {
+        return urlCheck;
     }
 }
