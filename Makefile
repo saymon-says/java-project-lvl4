@@ -16,3 +16,9 @@ build:
 
 doMigration:
 	gradlew generateMigrations
+
+start:
+	APP_ENV=development ./gradlew run
+
+test:
+	gradlew test
