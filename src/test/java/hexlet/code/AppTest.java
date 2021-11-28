@@ -1,5 +1,7 @@
 package hexlet.code;
 
+import hexlet.code.domain.Url;
+import hexlet.code.domain.query.QUrl;
 import io.ebean.DB;
 import io.ebean.Transaction;
 import io.javalin.Javalin;
@@ -18,6 +20,7 @@ class AppTest {
     private static String baseUrl;
     private static Javalin javalin;
     private static Transaction transaction;
+    private static final int OK = 200;
 
     @BeforeAll
     public static void beforeAll() {
@@ -45,7 +48,34 @@ class AppTest {
     @Test
     public void testRoot() {
         HttpResponse<String> response = Unirest.get(baseUrl).asString();
-        assertThat(response.getStatus()).isEqualTo(200);
+        assertThat(response.getStatus()).isEqualTo(OK);
+    }
+
+    @Test
+    public void testAddUrl() {
+
+        String test = "https://test.ru";
+
+        HttpResponse<String> responseUrl = Unirest
+                .post(baseUrl + "/urls")
+                .field("url", test)
+                .asEmpty();
+
+        assertThat(responseUrl.getStatus()).isEqualTo(OK);
+
+        Url testUrl = new QUrl()
+                .name.equalTo(test)
+                .findOne();
+
+        assertThat(testUrl).isNotNull();
+        assertThat(testUrl.getName()).isEqualTo(test);
+
+        HttpResponse<String> response = Unirest
+                .get(baseUrl + "/urls")
+                .asString();
+        String content = response.getBody();
+
+        assertThat(content).contains(test);
     }
 
 }
