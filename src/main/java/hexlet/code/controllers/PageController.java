@@ -1,9 +1,15 @@
 package hexlet.code.controllers;
 
 import hexlet.code.domain.Url;
+import hexlet.code.domain.UrlCheck;
 import hexlet.code.domain.query.QUrl;
+import hexlet.code.domain.query.QUrlCheck;
 import io.ebean.PagedList;
 import io.javalin.http.Handler;
+import kong.unirest.HttpResponse;
+import kong.unirest.Unirest;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -66,12 +72,67 @@ public final class PageController {
                 .id.equalTo(id)
                 .findOne();
 
+        List<UrlCheck> urlCheckList = new QUrlCheck()
+                .url.equalTo(url)
+                .orderBy()
+                .id.desc()
+                .findList();
+
+        ctx.attribute("checks", urlCheckList);
         ctx.attribute("url", url);
         ctx.render("urls/show.html");
     };
 
     public Handler getShowUrl() {
         return showUrl;
+    }
+
+    private final Handler checks = ctx -> {
+
+        long id = ctx.pathParamAsClass("id", Long.class).getOrDefault(null);
+
+        Url url = new QUrl()
+                .id.equalTo(id)
+                .findOne();
+
+        HttpResponse<String> response = Unirest
+                .get(url.getName())
+                .asString();
+        String content = response.getBody();
+
+        String contentTitle = "";
+        String contentH1 = "";
+        String contentDescription = "";
+        int contentStatus = response.getStatus();
+
+        Document doc = Jsoup.parse(content);
+        if (doc.title() != null) {
+            contentTitle = doc.title();
+        }
+        if (doc.select("meta[name=description]").first() != null) {
+            contentDescription = doc.select("meta[name=description]").first().attr("content");
+        }
+        if (doc.select("h1").first() != null) {
+            contentH1 = doc.select("h1").first().text();
+        }
+
+        UrlCheck urlCheck = new UrlCheck(contentStatus, contentTitle, contentH1, contentDescription, url);
+        urlCheck.save();
+
+        List<UrlCheck> urlCheckList = new QUrlCheck()
+                .url.equalTo(url)
+                .orderBy()
+                .id.desc()
+                .findList();
+
+        ctx.attribute("checks", urlCheckList);
+        ctx.attribute("url", url);
+
+        ctx.render("urls/show.html");
+    };
+
+    public Handler getChecks() {
+        return checks;
     }
 
     private static String createTransmittedUrl(String url) throws MalformedURLException {
@@ -90,5 +151,4 @@ public final class PageController {
                 .findOne();
         return checkedUrl == null;
     }
-
 }

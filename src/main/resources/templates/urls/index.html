@@ -47,7 +47,9 @@
                 <td>
                     <a th:text="*{getName()}" th:href="@{/urls/{id}(id=*{getId()})}"></a>
                 </td>
-                <td th:text="${#dates.format(url.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
+                <td th:text="${#dates.format(url.getCreatedAt(), 'dd/MM/yyyy HH:mm')}"></td>
+<!--                <td th:text="${#dates.format(url.getUrlCheck().get(0).getCreatedAt(), 'dd/MM/yyyy HH:mm')}">??</td>-->
+<!--                <td th:text="*{getUrlCheck().get(0).getStatusCode()}">???</td>-->
                 <td>???</td>
             </tr>
         </table>

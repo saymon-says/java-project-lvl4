@@ -32,11 +32,6 @@ public class Url extends Model {
     @OneToMany(cascade = CascadeType.ALL)
     private List<UrlCheck> urlCheck;
 
-    public Url(String pName, List<UrlCheck> pUrlChecks) {
-        this.name = pName;
-        this.urlCheck = pUrlChecks;
-    }
-
     public Url(String pTransmittedUrl) {
         this.name = pTransmittedUrl;
     }

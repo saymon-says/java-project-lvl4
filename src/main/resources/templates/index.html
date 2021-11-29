@@ -58,10 +58,8 @@
         <div class="container mt-3">
             <div th:if="${session.flash}" class="rounded-0 m-0 alert alert-dismissible fade show alert-info"
                  role="alert" th:text="${session.flash}">
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 <div th:if="${session.flash}" th:text="${#session.removeAttribute('flash')}"></div>
             </div>
-            <section layout:fragment="content"></section>
         </div>
     </section>
 </main>

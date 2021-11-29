@@ -42,26 +42,37 @@
                 <td th:text="*{getName()}"></td>
             </tr>
             <tr>
-                <td>Дата создания</td>
+                <td>Дата последней проверки</td>
                 <td th:text="${#dates.format(url.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
             </tr>
             </tbody>
         </table>
         <div class="container-lg mt-5" th:object="${url}">
             <h2 class="mt-5">Проверки</h2>
-            <a class="btn btn-primary" th:href="@{/urls/{id}/checks(id=*{id})}">Запустить проверки</a>
+            <form method="post" th:action="@{/urls/{id}/checks(id=*{id})}">
+                <button type="submit" class="btn btn-primary">Запустить проверку</button>
+            </form>
         </div>
         <table class="table table-bordered table-hover mt-3">
             <thead>
-            <tr><th class="col-1">ID</th>
+            <tr>
+                <th class="col-1">ID</th>
                 <th class="col-1">Код ответа</th>
                 <th>title</th>
                 <th>h1</th>
                 <th>description</th>
                 <th class="col-2">Дата проверки</th>
-            </tr></thead>
+            </tr>
+            </thead>
             <tbody>
-
+            <tr th:each="check: ${checks}">
+                <td class="col-1" th:text="${check.id}">ID</td>
+                <td class="col-1" th:text="${check.statusCode}">Код ответа</td>
+                <td th:text="${check.title}">title</td>
+                <td th:text="${check.h1}">h1</td>
+                <td th:text="${check.description}">description</td>
+                <td class="col-2" th:text="${#dates.format(check.createdAt, 'dd/MM/yyyy HH:mm')}">Дата проверки</td>
+            </tr>
             </tbody>
         </table>
     </div>
