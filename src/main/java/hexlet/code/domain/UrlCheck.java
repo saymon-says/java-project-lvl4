@@ -45,31 +45,31 @@ public class UrlCheck extends Model {
         this.url = pUrl;
     }
 
-    public long getId() {
+    public final long getId() {
         return id;
     }
 
-    public Date getCreatedAt() {
+    public final Date getCreatedAt() {
         return createdAt;
     }
 
-    public int getStatusCode() {
+    public final int getStatusCode() {
         return statusCode;
     }
 
-    public String getTitle() {
+    public final String getTitle() {
         return title;
     }
 
-    public String getH1() {
+    public final String getH1() {
         return h1;
     }
 
-    public String getDescription() {
+    public final String getDescription() {
         return description;
     }
 
-    public Url getUrl() {
+    public final Url getUrl() {
         return url;
     }
 }
