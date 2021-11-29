@@ -122,6 +122,7 @@ public final class PageController {
 
         } catch (Exception e) {
             ctx.sessionAttribute("flash", e.getMessage());
+//            ctx.render("urls/show.html");
         }
 
         List<UrlCheck> urlCheckList = new QUrlCheck()

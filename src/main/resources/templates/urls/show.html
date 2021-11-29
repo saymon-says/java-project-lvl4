@@ -48,11 +48,9 @@
             </tbody>
         </table>
         <div class="container-lg mt-5" th:object="${url}">
-            <div th:if="${session.flash}" class="rounded-0 m-0 alert alert-dismissible fade show alert-danger"
-                 role="alert" th:text="${session.flash}">
-                <div th:if="${session.flash}" th:text="${#session.removeAttribute('flash')}"></div>
-            </div>
-            <h2 class="mt-5">Проверки</h2>
+            <div th:if="${session.flash}" class="alert alert-danger" role="alert" th:text="${session.flash}"></div>
+            <div th:if="${session.flash}" th:text="${#session.removeAttribute('flash')}"></div>
+                        <h2 class="mt-5">Проверки</h2>
             <form method="post" th:action="@{/urls/{id}/checks(id=*{id})}">
                 <button type="submit" class="btn btn-primary">Запустить проверку</button>
             </form>
