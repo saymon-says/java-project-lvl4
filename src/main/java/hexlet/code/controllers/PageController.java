@@ -94,30 +94,35 @@ public final class PageController {
         Url url = new QUrl()
                 .id.equalTo(id)
                 .findOne();
+        try {
+            HttpResponse<String> response = Unirest
+                    .get(url.getName())
+                    .asString();
 
-        HttpResponse<String> response = Unirest
-                .get(url.getName())
-                .asString();
-        String content = response.getBody();
+            String content = response.getBody();
 
-        String contentTitle = "";
-        String contentH1 = "";
-        String contentDescription = "";
-        int contentStatus = response.getStatus();
+            String contentTitle = "";
+            String contentH1 = "";
+            String contentDescription = "";
+            int contentStatus = response.getStatus();
 
-        Document doc = Jsoup.parse(content);
-        if (doc.title() != null) {
-            contentTitle = doc.title();
+            Document doc = Jsoup.parse(content);
+            if (doc.title() != null) {
+                contentTitle = doc.title();
+            }
+            if (doc.select("meta[name=description]").first() != null) {
+                contentDescription = doc.select("meta[name=description]").first().attr("content");
+            }
+            if (doc.select("h1").first() != null) {
+                contentH1 = doc.select("h1").first().text();
+            }
+
+            UrlCheck urlCheck = new UrlCheck(contentStatus, contentTitle, contentH1, contentDescription, url);
+            urlCheck.save();
+
+        } catch (Exception e) {
+            ctx.sessionAttribute("flash", e.getMessage());
         }
-        if (doc.select("meta[name=description]").first() != null) {
-            contentDescription = doc.select("meta[name=description]").first().attr("content");
-        }
-        if (doc.select("h1").first() != null) {
-            contentH1 = doc.select("h1").first().text();
-        }
-
-        UrlCheck urlCheck = new UrlCheck(contentStatus, contentTitle, contentH1, contentDescription, url);
-        urlCheck.save();
 
         List<UrlCheck> urlCheckList = new QUrlCheck()
                 .url.equalTo(url)
