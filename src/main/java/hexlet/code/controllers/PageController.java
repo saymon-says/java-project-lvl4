@@ -120,6 +120,7 @@ public final class PageController {
             UrlCheck urlCheck = new UrlCheck(contentStatus, contentTitle, contentH1, contentDescription, url);
             urlCheck.save();
 
+            ctx.sessionAttribute("flash", "Страница успешно проверена");
         } catch (Exception e) {
             ctx.sessionAttribute("flash", e.getMessage());
         }
