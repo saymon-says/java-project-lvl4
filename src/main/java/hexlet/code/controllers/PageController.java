@@ -143,7 +143,7 @@ public final class PageController {
     private static String createTransmittedUrl(String url) throws MalformedURLException {
 
         URL tempUrl = new URL(url);
-        String transmitUrl = "https://" + tempUrl.getHost();
+        String transmitUrl = String.format("%s://%s", tempUrl.getProtocol(), tempUrl.getHost());
         if (tempUrl.getPort() != -1) {
             transmitUrl += ":" + tempUrl.getPort();
         }
