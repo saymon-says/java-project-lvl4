@@ -7,6 +7,8 @@ import io.ebean.Transaction;
 import io.javalin.Javalin;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
+import okhttp3.HttpUrl;
+import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -27,21 +29,16 @@ class AppTest {
     private static MockWebServer mockWebServer;
 
     @BeforeAll
-    public static void beforeAll() throws IOException {
+    public static void beforeAll() {
         javalin = App.getApp();
         javalin.start(0);
         int port = javalin.port();
         baseUrl = "http://localhost:" + port;
-
-//        mockWebServer = new MockWebServer();
-//        mockWebServer.url("/").toString();
-//        mockWebServer.start();
     }
 
     @AfterAll
-    public static void afterAll() throws IOException {
+    public static void afterAll() {
         javalin.stop();
-//        mockWebServer.shutdown();
     }
 
     @BeforeEach
@@ -88,22 +85,22 @@ class AppTest {
     }
 
     @Test
-    public void testCheckUrl() {
+    public void testCheckUrl() throws IOException {
 
-//        MockResponse mockResponse = new MockResponse()
-//                .addHeader("Content-Type", "application/json; charset=utf-8")
-//                .setBody("{\"id\": 1, \"name\":\"duke\"}");
-//        mockWebServer.enqueue(mockResponse);
-//
-////        mockWebServer.enqueue(new MockResponse().setBody("hello, world!")
-////                .setStatus("200")
-////                .setBody("<h1>hello</h1>"));
-//
-//
-//        HttpResponse<String> response = Unirest
-//                .get("/")
-//                .asString();
-//        System.out.println(response.getBody());
+        mockWebServer = new MockWebServer();
+        mockWebServer.enqueue(new MockResponse()
+                .setBody("{\"id\": 1, \"name\":\"duke\"}"));
+
+        mockWebServer.start();
+
+        HttpUrl httpUrl = mockWebServer.url("/");
+
+        HttpResponse<String> response = Unirest
+                .get(String.valueOf(httpUrl))
+                .asString();
+        String content = response.getBody();
+
+        assertThat(content).contains("duke");
 
     }
 
