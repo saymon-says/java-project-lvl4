@@ -6,6 +6,7 @@ import hexlet.code.domain.query.QUrl;
 import hexlet.code.domain.query.QUrlCheck;
 import io.ebean.PagedList;
 import io.javalin.http.Handler;
+import io.javalin.http.HttpCode;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 import org.jsoup.Jsoup;
@@ -133,6 +134,7 @@ public final class PageController {
 
         ctx.attribute("checks", urlCheckList);
         ctx.attribute("url", url);
+        ctx.header("Location", "/urls/" + id);
         ctx.redirect("/urls/" + id);
 
 //        ctx.render("urls/show.html");
