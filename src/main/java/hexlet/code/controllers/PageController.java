@@ -33,7 +33,7 @@ public final class PageController {
             }
             ctx.status(HttpCode.FOUND);
             ctx.header("Location", "/urls");
-            ctx.render("index.html");
+//            ctx.render("index.html");
         } catch (MalformedURLException e) {
             ctx.sessionAttribute("flash", "Ссылка битая");
             ctx.render("index.html");

@@ -30,7 +30,10 @@
             </div>
         </div>
     </nav>
-
+    <div class="container mt-3">
+        <div th:if="${session.flash}" class="alert alert-info" role="alert" th:text="${session.flash}"></div>
+        <div th:if="${session.flash}" th:text="${#session.removeAttribute('flash')}"></div>
+    </div>
     <div class="container-lg mt-5">
         <table class="table table-bordered table-hover mt-3">
             <thead>
