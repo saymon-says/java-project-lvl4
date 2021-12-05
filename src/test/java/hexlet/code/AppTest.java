@@ -5,7 +5,6 @@ import hexlet.code.domain.query.QUrl;
 import io.ebean.DB;
 import io.ebean.Transaction;
 import io.javalin.Javalin;
-import io.javalin.http.HttpCode;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 import okhttp3.HttpUrl;
