@@ -10,6 +10,8 @@ plugins {
 group = 'hexlet.code'
 version = '1.0-SNAPSHOT'
 
+applicationDefaultJvmArgs = ["-Dfile.encoding=UTF-8"]
+
 compileJava {
     options.release = 16
 }
@@ -50,7 +52,7 @@ dependencies {
     implementation 'com.h2database:h2:1.4.200'
     implementation 'org.postgresql:postgresql:42.2.24'
     implementation 'org.jsoup:jsoup:1.14.3'
-
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.4'
     implementation 'io.ebean:ebean:12.11.5'
     implementation 'io.ebean:ebean-ddl-generator:12.11.5'
     implementation 'io.ebean:ebean-migration:12.11.2'

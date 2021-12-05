@@ -133,8 +133,9 @@ public final class PageController {
 
         ctx.attribute("checks", urlCheckList);
         ctx.attribute("url", url);
+        ctx.redirect("/urls/" + id);
 
-        ctx.render("urls/show.html");
+//        ctx.render("urls/show.html");
     };
 
     public Handler getChecks() {
