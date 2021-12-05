@@ -30,6 +30,7 @@ public final class PageController {
             } else {
                 ctx.sessionAttribute("flash", "Ссылка уже существует");
             }
+            ctx.header("Location", "/urls/");
             ctx.render("index.html");
         } catch (MalformedURLException e) {
             ctx.sessionAttribute("flash", "Ссылка битая");
@@ -133,7 +134,6 @@ public final class PageController {
 
         ctx.attribute("checks", urlCheckList);
         ctx.attribute("url", url);
-        ctx.header("Location", "/urls/" + id);
         ctx.redirect("/urls/" + id);
 
 //        ctx.render("urls/show.html");
