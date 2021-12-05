@@ -5,6 +5,7 @@ import hexlet.code.domain.query.QUrl;
 import io.ebean.DB;
 import io.ebean.Transaction;
 import io.javalin.Javalin;
+import io.javalin.http.HttpCode;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 import okhttp3.HttpUrl;
@@ -26,6 +27,7 @@ class AppTest {
     private static Javalin javalin;
     private static Transaction transaction;
     private static final int OK = 200;
+    private static final int FOUND = 302;
     private static MockWebServer mockWebServer;
 
     @BeforeAll
@@ -67,7 +69,7 @@ class AppTest {
                 .field("url", test)
                 .asEmpty();
 
-        assertThat(responseUrl.getStatus()).isEqualTo(OK);
+        assertThat(responseUrl.getStatus()).isEqualTo(FOUND);
 
         Url testUrl = new QUrl()
                 .name.equalTo(test)
