@@ -32,7 +32,7 @@ public final class PageController {
                 ctx.sessionAttribute("flash", "Ссылка уже существует");
             }
             ctx.status(HttpCode.FOUND);
-            ctx.header("Location", "/urls/");
+            ctx.header("Location", "/urls");
             ctx.render("index.html");
         } catch (MalformedURLException e) {
             ctx.sessionAttribute("flash", "Ссылка битая");
