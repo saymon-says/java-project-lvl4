@@ -6,6 +6,7 @@ import hexlet.code.domain.query.QUrl;
 import hexlet.code.domain.query.QUrlCheck;
 import io.ebean.PagedList;
 import io.javalin.http.Handler;
+import io.javalin.http.HttpCode;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 import org.jsoup.Jsoup;
@@ -30,6 +31,7 @@ public final class PageController {
             } else {
                 ctx.sessionAttribute("flash", "Ссылка уже существует");
             }
+            ctx.status(HttpCode.FOUND);
             ctx.header("Location", "/urls/");
             ctx.render("index.html");
         } catch (MalformedURLException e) {
