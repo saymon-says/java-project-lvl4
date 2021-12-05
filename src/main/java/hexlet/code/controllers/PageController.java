@@ -27,9 +27,9 @@ public final class PageController {
             if (isNotSimilarUrl(transmittedUrl)) {
                 Url url = new Url(transmittedUrl);
                 url.save();
-                ctx.sessionAttribute("flash", "Ссылка успешно добавлена");
+                ctx.sessionAttribute("flash", "Страница успешно добавлена");
             } else {
-                ctx.sessionAttribute("flash", "Ссылка уже существует");
+                ctx.sessionAttribute("flash", "Страница уже существует");
             }
             ctx.status(HttpCode.FOUND);
             ctx.header("Location", "/urls");
