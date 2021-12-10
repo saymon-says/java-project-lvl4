@@ -20,11 +20,11 @@ public final class PageController {
 
     private static final int PAGINATION = 10;
 
-    private final Handler addPage = ctx -> {
+    public static final Handler ADD_PAGE = ctx -> {
         String incomeUrl = ctx.formParam("url");
         try {
-            String transmittedUrl = createTransmittedUrl(incomeUrl);
-            if (isNotSimilarUrl(transmittedUrl)) {
+            String transmittedUrl = normalizedUrl(incomeUrl);
+            if (isUniqUrl(transmittedUrl)) {
                 Url url = new Url(transmittedUrl);
                 url.save();
                 ctx.sessionAttribute("flash", "Страница успешно добавлена");
@@ -33,19 +33,13 @@ public final class PageController {
             }
             ctx.status(HttpCode.FOUND);
             ctx.header("Location", "/urls");
-//            ctx.render("index.html");
         } catch (MalformedURLException e) {
             ctx.sessionAttribute("flash", "Ссылка битая");
             ctx.render("index.html");
         }
     };
 
-    public Handler getAddPage() {
-        return addPage;
-    }
-
-
-    private final Handler listArticles = ctx -> {
+    public static final Handler LIST_URLS = ctx -> {
         int page = ctx.queryParamAsClass("page", Integer.class).getOrDefault(1);
         int rowsPerPage = PAGINATION;
         int offset = (page - 1) * rowsPerPage;
@@ -64,11 +58,7 @@ public final class PageController {
         ctx.render("urls/index.html");
     };
 
-    public Handler getListArticles() {
-        return listArticles;
-    }
-
-    private final Handler showUrl = ctx -> {
+    public static final Handler SHOW_URL = ctx -> {
         long id = ctx.pathParamAsClass("id", Long.class).getOrDefault(null);
 
         Url url = new QUrl()
@@ -86,11 +76,7 @@ public final class PageController {
         ctx.render("urls/show.html");
     };
 
-    public Handler getShowUrl() {
-        return showUrl;
-    }
-
-    private final Handler checks = ctx -> {
+    public static final Handler CHECK_URL = ctx -> {
 
         long id = ctx.pathParamAsClass("id", Long.class).getOrDefault(null);
 
@@ -128,24 +114,18 @@ public final class PageController {
             ctx.sessionAttribute("flash", e.getMessage());
         }
 
-        List<UrlCheck> urlCheckList = new QUrlCheck()
+        List<UrlCheck> urlChecks = new QUrlCheck()
                 .url.equalTo(url)
                 .orderBy()
                 .id.desc()
                 .findList();
 
-        ctx.attribute("checks", urlCheckList);
+        ctx.attribute("checks", urlChecks);
         ctx.attribute("url", url);
         ctx.redirect("/urls/" + id);
-
-//        ctx.render("urls/show.html");
     };
 
-    public Handler getChecks() {
-        return checks;
-    }
-
-    private static String createTransmittedUrl(String url) throws MalformedURLException {
+    private static String normalizedUrl(String url) throws MalformedURLException {
 
         URL tempUrl = new URL(url);
         String transmitUrl = String.format("%s://%s", tempUrl.getProtocol(), tempUrl.getHost());
@@ -155,7 +135,7 @@ public final class PageController {
         return transmitUrl;
     }
 
-    private static boolean isNotSimilarUrl(String url) {
+    private static boolean isUniqUrl(String url) {
         Url checkedUrl = new QUrl()
                 .name.equalTo(url)
                 .findOne();

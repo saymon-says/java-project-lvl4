@@ -28,7 +28,7 @@
             </div>
         </div>
     </nav>
-    <div class="container-lg mt-5" th:object="${url}">
+    <div class="container-lg mt-5" th:object="${url}" th:if="${not url == null}">
         <h1 th:text="*{getName()}">Сайт</h1>
 
         <table class="table table-bordered table-hover mt-3">
@@ -78,6 +78,8 @@
             </tbody>
         </table>
     </div>
+
+    <p1 th:object="${url}" th:if="${url == null}">Sorry, database dosn't contain this url</p1>
 
     </body>
 </section>

@@ -76,13 +76,38 @@ class AppTest {
 
         assertThat(testUrl).isNotNull();
         assertThat(testUrl.getName()).isEqualTo(test);
+    }
 
+    @Test
+    public void testShowUrls() {
         HttpResponse<String> response = Unirest
                 .get(baseUrl + "/urls")
                 .asString();
-        String content = response.getBody();
 
-        assertThat(content).contains(test);
+        assertThat(response.getStatus()).isEqualTo(OK);
+
+        String content = response.getBody();
+        assertThat(content).contains("https://vk.com");
+        assertThat(content).contains("http://junit.com");
+
+    }
+
+    @Test
+    public void testShowUrl() {
+        HttpResponse<String> response = Unirest
+                .get(baseUrl + "/urls/100")
+                .asString();
+
+        assertThat(response.getBody()).contains("Sorry");
+
+        HttpResponse<String> response2 = Unirest
+                .get(baseUrl + "/urls/2")
+                .asString();
+
+        assertThat(response2.getStatus()).isEqualTo(OK);
+
+        String content = response2.getBody();
+        assertThat(content).contains("http://junit.com");
     }
 
     @Test

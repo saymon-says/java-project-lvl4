@@ -39,15 +39,14 @@ public class App {
     }
 
     private static void addRoutes(Javalin app) {
-        PageController pageController = new PageController();
-        app.get("/", RootController.getWelcome());
+        app.get("/", RootController.WELCOME);
         app.routes(() -> {
             path("urls", () -> {
-                get(pageController.getListArticles());
-                post(pageController.getAddPage());
+                get(PageController.LIST_URLS);
+                post(PageController.ADD_PAGE);
                 path("{id}", () -> {
-                    get(pageController.getShowUrl());
-                    post("checks", pageController.getChecks());
+                    get(PageController.SHOW_URL);
+                    post("checks", PageController.CHECK_URL);
                 });
             });
         });
