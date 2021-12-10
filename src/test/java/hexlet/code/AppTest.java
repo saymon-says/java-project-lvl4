@@ -27,6 +27,7 @@ class AppTest {
     private static Transaction transaction;
     private static final int OK = 200;
     private static final int FOUND = 302;
+    private static final int SERVER_ERROR = 500;
     private static MockWebServer mockWebServer;
 
     @BeforeAll
@@ -98,7 +99,7 @@ class AppTest {
                 .get(baseUrl + "/urls/100")
                 .asString();
 
-        assertThat(response.getBody()).contains("Sorry");
+        assertThat(response.getStatus()).isEqualTo(SERVER_ERROR);
 
         HttpResponse<String> response2 = Unirest
                 .get(baseUrl + "/urls/2")

@@ -9,7 +9,7 @@
           rel="stylesheet"
           integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
           crossorigin="anonymous">
-    <script src="/webjars/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+    <!--    <script src="/webjars/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>-->
 </head>
 <section>
     <body class="d-flex flex-column min-vh-100">
@@ -28,7 +28,7 @@
             </div>
         </div>
     </nav>
-    <div class="container-lg mt-5" th:object="${url}" th:if="${not url == null}">
+    <div class="container-lg mt-5" th:object="${url}">
         <h1 th:text="*{getName()}">Сайт</h1>
 
         <table class="table table-bordered table-hover mt-3">
@@ -50,7 +50,7 @@
         <div class="container-lg mt-5" th:object="${url}">
             <div th:if="${session.flash}" class="alert alert-danger" role="alert" th:text="${session.flash}"></div>
             <div th:if="${session.flash}" th:text="${#session.removeAttribute('flash')}"></div>
-                        <h2 class="mt-5">Проверки</h2>
+            <h2 class="mt-5">Проверки</h2>
             <form method="post" th:action="@{/urls/{id}/checks(id=*{id})}">
                 <button type="submit" class="btn btn-primary">Запустить проверку</button>
             </form>
@@ -79,7 +79,7 @@
         </table>
     </div>
 
-    <p1 th:object="${url}" th:if="${url == null}">Sorry, database dosn't contain this url</p1>
+<!--    <h3 th:object="${url}" th:if="${url == null}">Sorry, database doesn't contain this url</h3>-->
 
     </body>
 </section>
